@@ -1,0 +1,131 @@
+---
+- name: Install packages and apply autoupdate
+  hosts: all
+  become: yes
+  roles:
+    - weareinteractive.apt
+  vars:
+    apt_keys:
+      - keyring: /etc/apt/keyrings/docker.gpg
+        url: https://download.docker.com/linux/ubuntu/gpg
+        validate_certs: yes
+        state: present
+    apt_repositories:
+      - filename: docker
+        repo: "deb [arch=amd64  signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+        update_cache: yes
+    apt_packages:
+      - acct
+      - auditd
+      - apt-show-versions
+      - clamav
+      - debsums
+      - fail2ban
+      - git
+      - sysstat
+      - ufw
+      - whiptail # For eth-docker
+      - chrony # For eth-docker
+      - docker-ce # docker_repo
+      - docker-ce-cli # docker_repo
+      - containerd.io # docker_repo
+      - docker-compose-plugin # docker_repo
+
+- name: Apply ufw
+  hosts: all
+  become: yes
+  collections:
+    - community.general
+  tasks:
+    - name: Allow Traefik # For home staking
+      community.general.ufw:
+        rule: allow
+        port: '443'
+        proto: tcp
+    - name: Allow Grafana # For home staking
+      community.general.ufw:
+        rule: allow
+        port: '3000'
+        proto: tcp
+    - name: Allow Netdata # For home staking
+      community.general.ufw:
+        rule: allow
+        port: '19999'
+        proto: tcp
+    - name: Allow Ethereum execution client (TCP)
+      community.general.ufw:
+        rule: allow
+        port: '30303'
+        proto: tcp
+    - name: Allow Ethereum execution client (UDP)
+      community.general.ufw:
+        rule: allow
+        port: '30303'
+        proto: udp
+    - name: Allow Ethereum consensus client (TCP)
+      community.general.ufw:
+        rule: allow
+        port: '9000'
+        proto: tcp
+    - name: Allow Ethereum consensus client (UDP)
+      community.general.ufw:
+        rule: allow
+        port: '9000'
+        proto: udp
+    - name: Allow SSH
+      community.general.ufw:
+        rule: allow
+        port: '22'
+        proto: tcp
+    - name: Set default deny
+      community.general.ufw:
+        state: enabled
+        policy: deny
+    - name: Set logging
+      community.general.ufw:
+        logging: 'on'
+      
+- name: Get the ansible user info
+  hosts: all
+  tasks:
+    - set_fact:
+        current_user_id: "{{ ansible_user_id }}"
+        current_user_dir: "{{ ansible_user_dir }}"
+        cacheable: yes
+      
+- name: Apply stakenode configurations
+  hosts: all
+  become: yes
+  roles:
+    - ubuntu
+  vars:
+    my_user_id: "{{ current_user_id }}"
+    my_user_dir: "{{ current_user_dir }}"
+
+- name: Apply security restrictions for OS
+  hosts: all
+  become: yes
+  collections:
+    - devsec.hardening
+  roles:
+    - devsec.hardening.os_hardening
+  vars:
+    os_security_kernel_enable_core_dump: false
+    os_auditd_max_log_file_action: rotate
+    sysctl_overwrite:
+      net.ipv4.ip_forward: 1
+      net.ipv6.conf.all.forwarding: 1
+
+- name: Apply security restrictions for SSH
+  hosts: all
+  become: yes
+  collections:
+    - devsec.hardening 
+  roles:
+    - devsec.hardening.ssh_hardening
+  vars:
+    ssh_client_password_login: false
+    ssh_client_alive_count: 2
+    ssh_max_sessions: 2
+    ssh_print_last_log: true

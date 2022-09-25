@@ -1,0 +1,10 @@
+---
+- name: Copy audit.rules
+  copy:
+    backup: yes
+    src: audit.rules
+    dest: /etc/audit/rules.d/audit.rules
+    owner: root
+    group: root
+    mode: 0640
+  notify: "restart auditd" 

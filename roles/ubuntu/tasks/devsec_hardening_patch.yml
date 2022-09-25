@@ -1,0 +1,10 @@
+---
+- name: Update sudoers.d permissions
+  file:
+    path: /etc/sudoers.d
+    mode: '0750'
+    
+- name: Update grub.cfg permissions
+  file:
+    path: /boot/grub/grub.cfg 
+    mode: '0600'

@@ -1,0 +1,44 @@
+---
+- name: Copy the default configuration
+  ansible.builtin.copy:
+    src: /etc/fail2ban/jail.conf
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Set the backend to systemd
+  lineinfile:
+    path: /etc/fail2ban/jail.local
+    regexp: '^backend ='
+    insertafter: EOF
+    firstmatch: yes
+    line: backend = systemd
+  notify: "restart fail2ban"
+
+- name: Set the banaction to ufw
+  lineinfile:
+    path: /etc/fail2ban/jail.local
+    regexp: '^banaction ='
+    insertafter: EOF
+    firstmatch: yes
+    line: banaction = ufw
+  notify: "restart fail2ban"
+
+- name: Set the banaction_allports to ufw
+  lineinfile:
+    path: /etc/fail2ban/jail.local
+    regexp: '^banaction_allports ='
+    insertafter: EOF
+    firstmatch: yes
+    line: banaction_allports = ufw
+  notify: "restart fail2ban"
+  
+- name: Set the ignoreip to ufw
+  lineinfile:
+    path: /etc/fail2ban/jail.local
+    regexp: '^ignoreip ='
+    insertafter: '^#ignoreip = 127.0.0.1/8 ::1'
+    firstmatch: yes
+    line: ignoreip = 127.0.0.1/8 ::1
+  notify: "restart fail2ban"

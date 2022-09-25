@@ -1,0 +1,4 @@
+all:
+  hosts:
+    YOUR_NODE_HOSTNAME_OR_IP:
+      ansible_user: USERNAME

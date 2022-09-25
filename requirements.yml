@@ -1,0 +1,5 @@
+roles:
+ - src: weareinteractive.apt
+collections:
+ - name: community.general
+ - name: devsec.hardening

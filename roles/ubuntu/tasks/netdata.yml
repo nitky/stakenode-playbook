@@ -1,0 +1,19 @@
+---
+- name: Download the installation script
+  get_url:
+    url: https://my-netdata.io/kickstart.sh
+    dest: ~/kickstart.sh
+    mode: +x
+
+- name: Install Netdata
+  command: ~/kickstart.sh --dont-wait --disable-telemetry --disable-cloud
+
+- name: Cleanup the installation script
+  file:
+    path: ~/kickstart.sh
+    state: absent
+
+- name: Start Netdata
+  service:
+    name: netdata
+    state: started

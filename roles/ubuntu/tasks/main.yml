@@ -1,0 +1,25 @@
+---
+- import_tasks: chrony.yml
+  tags:
+    - chrony
+- import_tasks: audit.yml
+  tags:
+    - audit
+- import_tasks: sysstat.yml
+  tags:
+    - sysstat
+- import_tasks: netdata.yml
+  tags:
+    - netdata
+- import_tasks: docker.yml
+  tags:
+    - docker
+- import_tasks: eth_docker.yml
+  tags:
+    - eth_docker
+- import_tasks: fail2ban.yml
+  tags:
+    - fail2ban
+- import_tasks: devsec_hardening_patch.yml
+  tags:
+    - devsec_hardening_patch

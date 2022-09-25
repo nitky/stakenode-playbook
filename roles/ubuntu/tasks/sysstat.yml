@@ -1,0 +1,7 @@
+---
+- name: Apply Sysstat
+  lineinfile:
+    path: /etc/default/sysstat
+    regexp: '^ENABLED='
+    line: ENABLED="true"
+  notify: "restart sysstat" 

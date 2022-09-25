@@ -1,0 +1,7 @@
+---
+- name: Checkout eth-docker
+  become: yes
+  become_user: "{{ my_user_id }}"
+  git:
+    repo: https://github.com/eth-educators/eth-docker.git
+    dest: "{{ my_user_dir }}/eth-docker"
