@@ -24,9 +24,9 @@ sudo apt update
 sudo apt install ansible
 ```
 
-> ⚠️ **For the node with public IP, change the play of "Apply ufw" in the playbook as needed.** (For example, delete `netdata` rules or stop using `ufw`.)
-
 Run the playbook:
+
+> ⚠️ **For the node with public IP, change the play of "Apply ufw" in the playbook as needed.** (For example, delete `netdata` rules or stop using `ufw`.)
 
 ```bash
 cd stakenode-playbook
