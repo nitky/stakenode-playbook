@@ -77,6 +77,8 @@ Check the dashboard using Grafana:
 
 ```bash
 # Open http://[node_internal_ip]:3000  in a browser
+# - username: admin
+# - password: admin
 ```
 
 ## ✨ Features
