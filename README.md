@@ -6,7 +6,7 @@ Easy server hardening and monitoring for Ethereum Solo Staking.
 
 Clone or download the ansible content on your node server where you want it to run:
 
-```
+```bash
 git clone https://github.com/nitky/stakenode-playbook
 ```
 
@@ -49,7 +49,7 @@ Try to run `eth-docker` following [the official documentation](https://eth-docke
 > # sudo ./ethd install
 >```
 
-```
+```bash
 cd ~/eth-docker
 sudo ./ethd config
 sudo ./ethd start
@@ -59,7 +59,7 @@ sudo ./ethd logs -f execution
 
 Generate keys and import them to the client:
 
-```
+```bash 
 sudo docker compose run --rm deposit-cli-new --eth1_withdrawal_address YOURHARDWAREWALLETADDRESS --uid $(id -u)
 sudo docker compose run --rm deposit-cli-existing --folder seed_check --eth1_withdrawal_address YOURHARDWAREWALLETADDRESS --uid $(id -u)
 sudo ./ethd keys import
@@ -67,7 +67,7 @@ sudo ./ethd keys list
 ```
 
 > ⚠️ If you want to delete the validator public key in the client, run the following commands:
->```
+>```bash
 >sudo ./ethd keys delete YOURVALIDATORPUBLICKEY
 >sudo ./ethd keys list
 >```
@@ -106,7 +106,7 @@ Tested with Ubuntu 22.04 LTS.
 
 Use the following commands to evaluate:
 
-```
+```bash
 git clone https://github.com/CISOfy/lynis
 sudo chown -R root:root lynis
 cd lynis 
