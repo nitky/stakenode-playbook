@@ -1,9 +1,16 @@
----
 - name: Install packages and apply autoupdate
   hosts: all
   become: yes
   roles:
     - weareinteractive.apt
+  pre_tasks:
+    - name: Create the keyrings directory for Docker
+      file:
+        path: "/etc/apt/keyrings"
+        state: directory
+        owner: "root"
+        group: "root"
+        mode: "775"
   vars:
     apt_keys:
       - keyring: /etc/apt/keyrings/docker.gpg
