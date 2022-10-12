@@ -61,12 +61,12 @@ Generate keys and import them to the client:
 
 ```bash 
 # Generate both validator(signing) and withdrawal keys:
-sudo docker compose run --rm deposit-cli-new --eth1_withdrawal_address YOURHARDWAREWALLETADDRESS --uid $(id -u)
+sudo ./ethd cmd run --rm deposit-cli-new --eth1_withdrawal_address YOURHARDWAREWALLETADDRESS --uid $(id -u)
 # Test your mnemonic seed phrase:
 # Ensure the deposit_data JSON files are the same.
-sudo docker compose run --rm deposit-cli-existing --folder seed_check --eth1_withdrawal_address YOURHARDWAREWALLETADDRESS --uid $(id -u)
+sudo ./ethd cmd run --rm deposit-cli-existing --folder seed_check --eth1_withdrawal_address YOURHARDWAREWALLETADDRESS --uid $(id -u)
 diff -s .eth/validator_keys/deposit_data*.json .eth/seed_check/deposit_data*.json
-rm .eth/seed_check/*
+sudo rm .eth/seed_check/*
 # Import keys:
 sudo ./ethd keys import
 sudo ./ethd keys list
