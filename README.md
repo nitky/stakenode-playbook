@@ -37,7 +37,8 @@ ansible-playbook playbooks/stakenode.yml -i inventory/local.yml -K
 Check the server performance using `netdata`:
 
 ```bash
-# Open http://[node_internal_ip]:19999 in a browser
+# Open http://[node_internal_ip]:19999 in a browser.
+# If you are using Avahi, http://[server_name].local:19999 is also fine. 
 ```
 
 Try to run `eth-docker` following [the official documentation](https://eth-docker.net/docs/About/Overview/):
@@ -82,7 +83,8 @@ sudo ./ethd keys list
 Check the dashboard using Grafana:
 
 ```bash
-# Open http://[node_internal_ip]:3000  in a browser
+# Open http://[node_internal_ip]:3000 in a browser.
+# If you are using Avahi, http://[server_name].local:3000 is also fine. 
 # - username: admin
 # - password: admin
 ```
