@@ -11,6 +11,15 @@
         owner: "root"
         group: "root"
         mode: "775"
+  post_tasks: # if you use Avahi
+    - name: Start Avahi
+      service:
+        name: avahi-daemon
+        state: started
+    - name: Enable Avahi
+      service:
+        name: avahi-daemon
+        enabled: yes
   vars:
     apt_keys:
       - keyring: /etc/apt/keyrings/docker.gpg
@@ -38,6 +47,7 @@
       - docker-ce-cli # docker_repo
       - containerd.io # docker_repo
       - docker-compose-plugin # docker_repo
+      - avahi-daemon # For home staking
 
 - name: Apply ufw
   hosts: all
