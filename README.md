@@ -34,7 +34,7 @@ ansible-galaxy install -r ./requirements.yml
 ansible-playbook playbooks/stakenode.yml -i inventory/local.yml -K
 ```
 
-Check the server performance using `netdata`:
+Check the server performance using Netdata:
 
 ```bash
 # Open http://[node_internal_ip]:19999 in a browser.
